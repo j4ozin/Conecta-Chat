@@ -1,3 +1,4 @@
+//consts cliente
 const presetPain = [
     "Estou me sentido bem, obrigado.",
     "Estou um pouco cansado.",
@@ -16,12 +17,24 @@ const presetSolicitar = [
     "Quero solicitar um 'Cuidador/Acompanhador' com 'CARRO'."
 ];
 
+//consts cuidador/acompanhador
 const cadastroColaborador = [
     "Quero me cadastrar como 'Cuidador'!",
     "Quero me cadastrar como 'Acompanhador'!",
     "Quero me cadastrar como 'Cuidador/Acompanhador' com 'CARRO'."
 ];
 
+const presetCertificao = [
+    "Sim, tenho certificação!",
+    "Não tenho certificação!.",
+    "Não tenho certificação, mas pretendo fazer uma."
+];
+
+const presetCNH = [
+    "Sim, tenho CNH!",
+    "Não tenho CNH!.",
+    "Não tenho CNH, mas pretendo fazer uma."
+];
 
 // Prompt inicial para o tipo de usuário
 function getUserType() {
@@ -81,6 +94,47 @@ function usuario() {
     
     return null;
 }
+  // Mostrar opções como lista numerada para melhor UX p/ colaborador
+function freelancer() {
+    const cadastroColaboradorOptions = cadastroColaborador
+        .map((option, index) => `${index + 1}. ${option}`)
+        .join('\n');
+
+    const certificacaoOptions = presetCertificao
+        .map((option, index) => `${index + 1}. ${option}`)
+        .join('\n');
+
+    const cnhOptions = presetCNH
+        .map((option, index) => `${index + 1}. ${option}`)
+        .join('\n');
+
+// Obter respostas do colaborador (subtrair 1 para corresponder ao índice do array)
+    const cadastroColaboradorResponse = parseInt(prompt(
+        "Você deseja se cadastrar como colaborador?\n" + cadastroColaboradorOptions
+    )) - 1;
+
+    const certificacaoResponse = parseInt(prompt(
+        "Você possui certificação?\n" + certificacaoOptions
+    )) - 1;
+
+    const cnhResponse = parseInt(prompt(
+        "Você possui CNH?\n" + cnhOptions
+    )) - 1;
+
+    //Validar as respostas
+    if (isValidResponse(cadastroColaboradorResponse, cadastroColaborador) &&
+        isValidResponse(certificacaoResponse, presetCertificao) &&
+        isValidResponse(cnhResponse, presetCNH)) {
+
+        return {
+            cadastroColaborador: cadastroColaborador[cadastroColaboradorResponse],
+            certificacao: presetCertificao[certificacaoResponse],
+            cnh: presetCNH[cnhResponse]
+        };
+    }
+
+    return null;
+}
 
 function isValidResponse(response, array) {
     return response >= 0 && response < array.length;
@@ -96,7 +150,7 @@ function iniciarQuiz() {
 
     switch (userType) {
         case 1:
-            const responses = usuario();
+            const responses = usuario();//chamada da função para o usuario/cliente
             if (responses) {
                 alert("Obrigado pela colaboração!");
                 console.log('Respostas:', responses);
@@ -104,7 +158,16 @@ function iniciarQuiz() {
                 alert("Respostas inválidas. Por favor, tente novamente.");
             }
             break;
+        
         case 2:
+            const responsesColaborador = freelancer();// Chamada da função para o colaborador
+            if (responsesColaborador) {
+                console.log('Respostas:', responsesColaborador);
+            } else {
+                alert("Respostas inválidas. Por favor, tente novamente.");
+            }
+        
+        case 3:
             alert("Obrigado por nos escolher, por favor responda ao nosso Quiz!");
             break;
         default:
