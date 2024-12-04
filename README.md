@@ -2,7 +2,7 @@
 Código base para o chat-bot do Cuida &amp; Conecta.
 
 
-# Explicação do Código - Cuida-Chat
+# Explicação do Código - Cuida-Chat parte (JS)
 
 Este projeto simula um chatbot chamado **Cuida-Chat**, projetado para interagir com dois tipos de usuários: **clientes** e **cuidadores/acompanhadores**. O programa utiliza prompts para coletar respostas e exibir informações organizadas.
 
